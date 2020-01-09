@@ -8,12 +8,11 @@ const PORT = process.env.port || 5000
 
 const app = express()
 
-const DB_URL = "mongodb://localhost:27017/lasagne-app-db"
-// TODO connect with my index.js file in my routes dir
+// const DB_URL = "mongodb://localhost:27017/lasagne-app-db"
+
 const dbConfig = {useNewUrlParser: true, useUnifiedTopology: true}
 
-
-mongoose.connect(DB_URL, dbConfig, (err) => {
+mongoose.connect(process.env.DB_URL, dbConfig, (err) => {
     if (err) {
         console.log('error')
     } else {
@@ -21,5 +20,8 @@ mongoose.connect(DB_URL, dbConfig, (err) => {
     }
 })
 
-// middleware
+// connect with index.js file in routes dir using middleware
+app.use(require('./routes/index'))
+
+// listen
 app.listen(PORT, () => console.log(`listening on port ${PORT}`))
